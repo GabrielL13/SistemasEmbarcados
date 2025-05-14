@@ -1,7 +1,7 @@
 ### Atividade 4
 https://wokwi.com/projects/430923795986836481
 
-![imagem](https://github.com/user-attachments/assets/018b7037-4491-462f-ae85-d6671cf88fa0)
+![Captura de tela de 2025-05-14 10-20-56](https://github.com/user-attachments/assets/3c3f07e4-e069-4ec9-a250-1322d68e4d91)
 
 #### Diagrama de Blocos :
 
