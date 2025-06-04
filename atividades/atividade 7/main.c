@@ -38,8 +38,8 @@
 #define NTC_NOMINAL_RESISTANCE  10000
 #define NTC_NOMINAL_TEMPERATURE 25.0
 
-#define NUM_AMOSTRAS_FILTRO 10
-#define INTERVALO_LEITURA_MS 50
+#define NUM_AMOSTRAS_FILTRO 10 
+#define INTERVALO_LEITURA_MS 100
 
 volatile uint32_t ultima_vez_inc = 0;
 volatile uint32_t ultima_vez_dec = 0;
@@ -168,7 +168,7 @@ void lcd_i2c_print(lcd_i2c_handle_t *lcd, const char *fmt, ...) {
 float ler_temp_unica() {
     int leitura = adc1_get_raw(NTC_ADC_CHANNEL);
     if (leitura <= 0 || leitura >= 4095) {
-        return NAN; 
+        return NAN;
     }
     float resistencia = (float)NTC_SERIES_RESISTOR * leitura / (4095.0 - leitura);
     float tempK = 1.0f / (1.0f / (NTC_NOMINAL_TEMPERATURE + 273.15f)
@@ -178,28 +178,30 @@ float ler_temp_unica() {
 }
 
 void atualiza_display(float temp, float alarme) {
+   
     lcd_i2c_cursor_set(&display, 0, 0);
+    lcd_i2c_print(&display, "                "); /
+    lcd_i2c_cursor_set(&display, 0, 0); 
     if (isnan(temp)) {
-        lcd_i2c_print(&display, "Temp: ---.- C   ");
-        lcd_i2c_print(&display, "Temp: %.1f C   ", temp); 
+        lcd_i2c_print(&display, "Temp: ---.- C");
+    } else {
+        lcd_i2c_print(&display, "Temp: %.1f C", temp);
     }
+
     lcd_i2c_cursor_set(&display, 0, 1);
-    lcd_i2c_print(&display, "Alarme: %.1f C ", alarme);
+    lcd_i2c_print(&display, "                "); 
+    lcd_i2c_cursor_set(&display, 0, 1);
+    lcd_i2c_print(&display, "Alarme: %.1f C", alarme);
 }
 
 void atualizar_leds(float temp, float alarme) {
-    float diferenca = fabs(alarme - temp); 
+    float diferenca = fabs(alarme - temp);
+
     if (temp >= alarme) {
         gpio_set_level(LED1, 1);
         gpio_set_level(LED2, 1);
         gpio_set_level(LED3, 1);
         gpio_set_level(LED4, 1);
-        vTaskDelay(pdMS_TO_TICKS(150));
-        gpio_set_level(LED1, 0);
-        gpio_set_level(LED2, 0);
-        gpio_set_level(LED3, 0);
-        gpio_set_level(LED4, 0);
-        vTaskDelay(pdMS_TO_TICKS(150));
     } else {
         gpio_set_level(LED1, 0);
         gpio_set_level(LED2, 0);
