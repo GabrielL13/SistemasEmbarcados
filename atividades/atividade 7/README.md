@@ -1,4 +1,4 @@
-### Atividade 7 
+## Atividade 7 
 
 https://wokwi.com/projects/432826151355746305
 
@@ -6,6 +6,6 @@ https://wokwi.com/projects/432826151355746305
 
 #### Diagrama de Blocos :
 
-![blocos 7](https://github.com/user-attachments/assets/043c1850-00f5-4247-9fc8-fad0fd49b0a7)
+![ESP7](https://github.com/user-attachments/assets/8a54758f-f232-49c4-9e88-da2f64d93de1)
 
 #### Esquemático :
